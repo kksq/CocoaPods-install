@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cocoapods的安装和使用 by kksq</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Cocoapods的安装和使用</h1>
+      <h2 class="project-tagline">本文章是关于iOS开发中使用CocoaPods工具来管理第三方开源库</h2>
+      <a href="https://github.com/kksq/CocoaPods-Install-" class="btn">View on GitHub</a>
+      <a href="https://github.com/kksq/CocoaPods-Install-/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/kksq/CocoaPods-Install-/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="1什么是cocoapods" class="anchor" href="#1%E4%BB%80%E4%B9%88%E6%98%AFcocoapods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1:什么是CocoaPods?</h2>
+
+<p>CocoaPods是一个负责管理iOS项目中第三方开源库的工具，CocoaPods在GitHub上的源码在这里：<a href="CocoaPods%E6%BA%90%E7%A0%81">https://github.com/CocoaPods/CocoaPods</a></p>
+
+<h2>
+<a id="2cocoapods需要基于ruby环境下才可以使用命令操作mac下已经自带了ruby只要使用ruby的gem命令就可以安装了如果已经安装过ruby请跳过此步骤" class="anchor" href="#2cocoapods%E9%9C%80%E8%A6%81%E5%9F%BA%E4%BA%8Eruby%E7%8E%AF%E5%A2%83%E4%B8%8B%E6%89%8D%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9Cmac%E4%B8%8B%E5%B7%B2%E7%BB%8F%E8%87%AA%E5%B8%A6%E4%BA%86ruby%E5%8F%AA%E8%A6%81%E4%BD%BF%E7%94%A8ruby%E7%9A%84gem%E5%91%BD%E4%BB%A4%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%AE%89%E8%A3%85%E4%BA%86%E5%A6%82%E6%9E%9C%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E8%BF%87ruby%E8%AF%B7%E8%B7%B3%E8%BF%87%E6%AD%A4%E6%AD%A5%E9%AA%A4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2:CocoaPods需要基于Ruby环境下才可以使用命令操作，Mac下已经自带了Ruby，只要使用Ruby的gem命令就可以安装了(如果已经安装过Ruby请跳过此步骤)</h2>
+
+<p>2.1 先安装必须包Mac操作系统和XCode开发工具</p>
+
+<p>2.2 安装RVM，打开的Mac的终端，在终端运行下面的命令（如果提醒输入密码则输入系统开机密码即可，等段时间就会自动安装好）</p>
+
+<pre><code>  $ curl -L https://get.rvm.io | bash -s stable
+</code></pre>
+
+<p>2.3 载入RVM环境</p>
+
+<pre><code>  $ source ~/.rvm/scripts/rvm
+</code></pre>
+
+<p>2.4 检查一下是否安装正确</p>
+
+<pre><code>  $ rvm -v
+  如果安装正确会输出下列信息👇
+  rvm 1.27.0 (latest) by Wayne E. Seguin &lt;wayneeseguin@gmail.com&gt;, Michal Papis &lt;mpapis@gmail.com&gt;     [https://rvm.io/]
+</code></pre>
+
+<p>2.5 利用RVM安装Ruby
+      首先使用命令列出已知RVM版本信息列表
+      $ rvm list known</p>
+
+<pre><code>  从终端中选择最新版本的RVM来安装
+  $ rvm install 2.2.4
+</code></pre>
+
+<p>2.6 RVM装好以后，需要执行下面的命令将指定版本的Ruby设置为系统默认版本</p>
+
+<pre><code>  $ rvm 2.2.4 --default
+
+  查看是否安装ruby正确
+  $ ruby -v
+  安装正确会输出👇
+  ruby 2.2.4p230 (2015-12-16 revision 53155) [x86_64-darwin15]
+
+  查看是否安装gem正确
+  $ gem -v 
+</code></pre>
+
+<p>2.7 Ruby的默认源使用的是cocoapods.org,如果想替换成其他源地址的话可以这样操作</p>
+
+<pre><code>  移除默认源
+  $ gem source -r https://rubygems.org/
+
+  添加其他默认源
+  gem source -a https://ruby.taobao.org/
+
+  要想验证是否替换成功了
+  $ gem sources -l
+  安装正确会输出👇
+  *** CURRENT SOURCES ***
+  https://rubygems.org/
+</code></pre>
+
+<p>2.8 到这里就已经把Ruby环境成功的安装到了Mac OS X上，接下来就可以进行相应的开发使用了。</p>
+
+<h2>
+<a id="3第三部准备安装cocoapods环境假如你在本地已经安装好ruby环境那么下载和安装cocoapods将十分简单只需要一行命令在终端中输入以下命令" class="anchor" href="#3%E7%AC%AC%E4%B8%89%E9%83%A8%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85cocoapods%E7%8E%AF%E5%A2%83%E5%81%87%E5%A6%82%E4%BD%A0%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E5%A5%BDruby%E7%8E%AF%E5%A2%83%E9%82%A3%E4%B9%88%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85cocoapods%E5%B0%86%E5%8D%81%E5%88%86%E7%AE%80%E5%8D%95%E5%8F%AA%E9%9C%80%E8%A6%81%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BE%93%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3:第三部准备安装CocoaPods环境,假如你在本地已经安装好Ruby环境，那么下载和安装CocoaPods将十分简单，只需要一行命令，在终端中输入以下命令</h2>
+
+<pre><code>  $ sudo gem install cocoapods
+</code></pre>
+
+<p>正常情况下一两分钟后就会安装完成，如果长时间未响应，可能在上面2.7步骤的默认源需要翻墙访问，而你当前的网络没有挂VPN，那么这种情况请换    一个可以在国内正常访问的源，据他们说可以换成<a href="https://ruby.taobao.org%E7%9A%84%E8%BF%99%E4%B8%AA%E5%9C%B0%E5%9D%80%EF%BC%8C%E4%BD%86%E6%98%AF%E4%BD%9C%E8%80%85%E8%AF%95%E4%BA%86%E5%8F%91%E7%8E%B0%E4%B8%80%E6%A0%B7%E6%B2%A1%E7%94%A8%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%98%AF%E6%AD%A4%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%83%BD%E7%94%A8%E4%BA%86%E3%80%82">https://ruby.taobao.org的这个地址，但是作者试了发现一样没用，可能是此地址不能用了。</a></p>
+
+<h2>
+<a id="4cocoapods在项目中的使用" class="anchor" href="#4cocoapods%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4.CocoaPods在项目中的使用</h2>
+
+<p>4.0我想查询比如AFNetworking这个库是否被Pods命令支持，那么我可以这么操作</p>
+
+<pre><code>  $ pod search AFNetworking
+
+  特别注意：第一次使用终端会输出Setting up CocoaPods master repo并且卡住的现象，这时候只需要等待，
+  因为首次使用Pods会安装并初始化所需要的缓存文件，如果你想查看进度那么这个时候可以用command＋N命令重
+  新打开一个终端窗口,然后输入
+
+  $ cd ~/.cocoapods 
+  $ du -sh *
+
+  即可查看当前下载进度
+  下载完成可以使用以下命令来查询某个开源库是否支持Pods，如果有就能看见相关开源库的安装和使用信息
+
+  $ pod search AFNetworking
+</code></pre>
+
+<p>4.1创建一个空项目，同时使用命令行打开该项目根目录来操作Pods</p>
+
+<pre><code>  $ cd /Users/kksq/Desktop/podTest
+</code></pre>
+
+<p>4.2创建在根目录下创建Podfile文件，该文件是管理第三方所有组件一个集合</p>
+
+<pre><code>  $ vim Podfile
+
+  在命令终端中输入cocoapods所规范的特殊格式
+
+  target "ProjectName" do 
+     pod 'AFNetworking', '~&gt; 3.0'
+  end
+
+ ProjectName为你项目的名字
+ AFNetworking为所需要下载第三方开源库，后面是开源库的版本号
+
+ 执行完以上操作后按(esc)键，同时输入(:wq)然后按回车这个时候你的回到你的项目根目录下就会发
+ 现有一个Podfile的文件，并且多了一个后缀名为.xcworkspace的项目启动文件，以后开发的时候
+ 就要打开这个文件了
+
+ 回到终端输入以下命令执行开源库安装
+
+ $ pod install
+
+ 执行到这，第三方库久集成到你的项目中了，如果想删除或者更新的话需要先使用($ vim Podfile)命令
+ 打开Podfile文件修改版本号或者删除不需要的库，操作后按(esc)键，同时输入(:wq)然后按回车，回到
+ 终端执行($ pod install)就可以删除或者更新操作
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/kksq/CocoaPods-Install-">Cocoapods的安装和使用</a> is maintained by <a href="https://github.com/kksq">kksq</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
